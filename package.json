@@ -1,0 +1,25 @@
+{
+  "name": "meme-func",
+  "version": "1.0.0",
+  "description": "A set of useful functions for developing cloud functions.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/winrey/meme-func.git"
+  },
+  "keywords": [
+    "cloud-function",
+    "framework",
+    "serializer",
+    "validator"
+  ],
+  "author": "Winrey",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/winrey/meme-func/issues"
+  },
+  "homepage": "https://github.com/winrey/meme-func#readme"
+}
