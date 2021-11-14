@@ -2,24 +2,54 @@
   "name": "meme-func",
   "version": "1.0.0",
   "description": "A set of useful functions for developing cloud functions.",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --config jestconfig.json",
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/winrey/meme-func.git"
   },
   "keywords": [
-    "cloud-function",
+    "cloud-functions",
     "framework",
-    "serializer",
-    "validator"
+    "wechat-mini-program",
+    "validator",
+    "serializer"
   ],
   "author": "Winrey",
+  "files": [
+    "lib/**/*"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/winrey/meme-func/issues"
   },
-  "homepage": "https://github.com/winrey/meme-func#readme"
+  "homepage": "https://github.com/winrey/meme-func#readme",
+  "devDependencies": {
+    "@types/jest": "^27.0.2",
+    "@typescript-eslint/eslint-plugin": "^5.3.1",
+    "@typescript-eslint/parser": "^5.3.1",
+    "babel-jest": "^27.3.1",
+    "eslint": "^8.2.0",
+    "jest": "^27.3.1",
+    "prettier": "^2.4.1",
+    "ts-jest": "^27.0.7",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^4.4.4"
+  },
+  "dependencies": {
+    "@types/lodash": "^4.14.176",
+    "lodash": "^4.17.21",
+    "tslib": "^2.3.1"
+  }
 }
