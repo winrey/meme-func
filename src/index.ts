@@ -1,5 +1,16 @@
-export let isDebug = false
+import { CloudInputArgumentType } from "./typings/args"
 
-export const init = async ({isDebug = false}) => {
-  isDebug = isDebug
+export let isDEBUG = false
+
+export const initMeme = async ({isDebug = false}: {
+  isDebug?: boolean
+}) => {
+  isDEBUG = isDebug
+}
+
+export const initMemeReq = async ({reqest}: {
+  reqest: CloudInputArgumentType,
+  isDebug?: boolean
+}) => {
+  isDEBUG = isDebug
 }

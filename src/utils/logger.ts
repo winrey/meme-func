@@ -1,28 +1,28 @@
 import { type } from 'os';
 import cloud, { ICloud, logger } from 'wx-server-sdk'
-import { isDebug } from '..';
+import { isDEBUG } from '..';
 import { Failure, LogNotReadyFailure } from '../errors/failure';
 
 let wxLog: ICloud.Logger | null = null
 let hasInit = false
 let event, context
 
-interface ILogConfig {
-  /** log唯一uuid */
-  // needLogId?: boolean,
-  /** 请求信息 */
-  // needLogToConsole: boolean,
-  /** 请求信息 */
-  // needReqDetail?: boolean,
-  /** wxContext信息 */
-  // needContextDetail?: boolean,
-  /** auth信息 */
-  // needAuthInfo?: boolean,
-  /** 环境变量 */
-  // needEnvVar?: boolean,
-  /** 调用堆栈 */
-  // needCallStack?: boolean,
-}
+// interface ILogConfig {
+//   /** log唯一uuid */
+//   // needLogId?: boolean,
+//   /** 请求信息 */
+//   // needLogToConsole: boolean,
+//   /** 请求信息 */
+//   // needReqDetail?: boolean,
+//   /** wxContext信息 */
+//   // needContextDetail?: boolean,
+//   /** auth信息 */
+//   // needAuthInfo?: boolean,
+//   /** 环境变量 */
+//   // needEnvVar?: boolean,
+//   /** 调用堆栈 */
+//   // needCallStack?: boolean,
+// }
 
 type LogLevel = "debug" | "info" | "log" | "warn" | "error"
 // const logToWxMap = {
@@ -36,9 +36,9 @@ type LogLevel = "debug" | "info" | "log" | "warn" | "error"
 let logToWxMap: any = {}
 
 class Logger {
-  constructor() {
+  // constructor() {
 
-  }
+  // }
 
   /**
    * 检查是否可以log
@@ -103,7 +103,7 @@ class Logger {
   private _log(level: LogLevel, info: object | string, type="") {
     this.assureCanLog()
     const isLogDebug = level === 'debug'
-    if (isLogDebug && !isDebug) {
+    if (isLogDebug && !isDEBUG) {
       // 非debug mod不log debug
       return
     }
