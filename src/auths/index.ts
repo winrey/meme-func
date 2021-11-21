@@ -1,46 +1,49 @@
-import { NotImplementFailure } from "../errors/failure";
-import { CloudInputArgumentType } from "../typings/args";
+import { NotImplementFailure } from '../errors/failure';
+import { CloudInputArgumentType } from '../typings/args';
 
 export class Auth {
   async check(): Promise<boolean> {
-    throw new NotImplementFailure()
+    throw new NotImplementFailure();
   }
 
   static and(auths: AuthType[]) {
-    return authAnd(auths)
+    return authAnd(auths);
   }
 
   static or(auths: AuthType[]) {
-    return authOr(auths)
+    return authOr(auths);
   }
 }
 
-export type AuthType = Auth | ((args: CloudInputArgumentType) => Promise<boolean>)
+export type AuthType = Auth | ((args: CloudInputArgumentType) => Promise<boolean>);
 
-export async function checkAuth(auth: AuthType, {event, context}: CloudInputArgumentType) {
-  if (!auth) return true
+export async function checkAuth(auth: AuthType, { event, context }: CloudInputArgumentType) {
+  if (!auth) return true;
   if (auth instanceof Auth) {
-    return await auth.check()
+    return await auth.check();
   }
-  return await auth({event, context})
+  return await auth({ event, context });
 }
 
-
-export const authAnd = (auths: AuthType[]) => async ({event, context}: CloudInputArgumentType) => {
-  for(const auth of auths) {
-    if (!await checkAuth(auth, {event, context})) {
-      return false
-    }
-  }
-}
-
-export const authOr = (auths: AuthType[]) => async ({event, context}: CloudInputArgumentType) => {
-  for(const auth of auths) {
-    try {
-      if (await checkAuth(auth, {event, context})) {
-        return true
+export const authAnd =
+  (auths: AuthType[]) =>
+  async ({ event, context }: CloudInputArgumentType) => {
+    for (const auth of auths) {
+      if (!(await checkAuth(auth, { event, context }))) {
+        return false;
       }
-    } catch {}
-  }
-  return false
-}
+    }
+  };
+
+export const authOr =
+  (auths: AuthType[]) =>
+  async ({ event, context }: CloudInputArgumentType) => {
+    for (const auth of auths) {
+      try {
+        if (await checkAuth(auth, { event, context })) {
+          return true;
+        }
+      } catch {}
+    }
+    return false;
+  };

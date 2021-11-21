@@ -1,8 +1,7 @@
-import { CloudInputArgumentType } from "../typings/args";
+import { CloudInputArgumentType } from '../typings/args';
 
-// let func = 
+// let func =
 
 // export const initContext = (args: CloudInputArgumentType) {
-  
-// }
 
+// }

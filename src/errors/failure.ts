@@ -1,62 +1,61 @@
-
 /**
  * Failure为服务器预期外的错误
  */
 export class Failure extends Error {
-  msg = "Server Interal Failure"
+  msg = 'Server Interal Failure';
 
   constructor(message?: string) {
-    super(message)
-    this.name = 'Failure'
-    Error.captureStackTrace(this, this.constructor)
+    super(message);
+    this.name = 'Failure';
+    Error.captureStackTrace(this, this.constructor);
   }
 }
 
 export class NotImplementFailure extends Failure {
-  name = "NotImplementFailure"
-  msg = "Not Implement Failure"
+  name = 'NotImplementFailure';
+  msg = 'Not Implement Failure';
 
-  constructor(message: undefined | string = "") {
-    super(`Not Implement Error ${message}`)
+  constructor(message: undefined | string = '') {
+    super(`Not Implement Error ${message}`);
   }
 }
 
 export class LogNotReadyFailure extends Failure {
-  name = "LogNotReadyFailure"
-  msg = "Log Not Ready Failure"
+  name = 'LogNotReadyFailure';
+  msg = 'Log Not Ready Failure';
 }
 
 export class DatabaseResultNotObjFailure extends Failure {
-  name = "DatabaseResultNotObjFailure"
-  msg = "Database Result Not Object"
+  name = 'DatabaseResultNotObjFailure';
+  msg = 'Database Result Not Object';
 }
 
 export class DatabaseUpdateFailure extends Failure {
-  name = "DatabaseUpdateFailure"
-  msg = "Database Update Failure"
+  name = 'DatabaseUpdateFailure';
+  msg = 'Database Update Failure';
 }
 
 export class NoAuthInfoFailure extends Failure {
-  name = "NoAuthInfoFailure"
-  msg = "No Auth Info: User Not Login"
+  name = 'NoAuthInfoFailure';
+  msg = 'No Auth Info: User Not Login';
 }
 
 export class NoAppIdFailure extends Failure {
-  name = "NoAppIdFailure"
-  msg = "No Auth Info: User Not Login"
+  name = 'NoAppIdFailure';
+  msg = 'No Auth Info: User Not Login';
 }
 
 export class NoUnionIdFailure extends Failure {
-  name = "NoUnionIdFailure"
-  msg = "No UnionId and Cannot Find in Union-Open Map"
+  name = 'NoUnionIdFailure';
+  msg = 'No UnionId and Cannot Find in Union-Open Map';
 }
 
 export class CreateUserFailure extends Failure {
-  name = "CreateUserFailure"
-  msg = "Create User Failed"
+  name = 'CreateUserFailure';
+  msg = 'Create User Failed';
 }
 
 export class WrongArgumentFailure extends Failure {
-  name = "WrongArgumentFailure"
-  msg = "Wrong Argument Failure"
+  name = 'WrongArgumentFailure';
+  msg = 'Wrong Argument Failure';
 }
