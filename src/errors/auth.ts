@@ -1,4 +1,4 @@
-import { CustomError } from "."
+import { CustomError } from "./basic"
 
 export class AuthError extends CustomError {
   code = 50000

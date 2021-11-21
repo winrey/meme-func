@@ -1,4 +1,4 @@
-import { CustomError } from "."
+import { CustomError } from "./basic"
 
 export class ServerInternalError extends CustomError {
   code = 60000

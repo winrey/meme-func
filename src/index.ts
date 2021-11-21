@@ -8,9 +8,9 @@ export const initMeme = async ({isDebug = false}: {
   isDEBUG = isDebug
 }
 
-export const initMemeReq = async ({reqest}: {
+export const initMemeReq = async ({reqest, isDebug}: {
   reqest: CloudInputArgumentType,
   isDebug?: boolean
 }) => {
-  isDEBUG = isDebug
+  isDEBUG = isDebug || false
 }

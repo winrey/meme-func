@@ -1,4 +1,4 @@
-import { CustomError } from "."
+import { CustomError } from "./basic"
 
 export class WrongReqError extends CustomError {
   code = 20100

@@ -1,4 +1,4 @@
-import { CustomError, makeErrorBasicRes } from ".";
+import { CustomError, makeErrorBasicRes } from "./basic";
 import { isDEBUG } from "..";
 import { logFailure } from "../utils/logger";
 import { Failure } from "./failure";

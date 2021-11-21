@@ -1,9 +1,9 @@
-export function getClassName(obj: Object) {
+export function getClassName(obj: object) {
   if (obj && obj.constructor && obj.constructor.toString()) {
     if(obj.constructor.name) {
       return obj.constructor.name;
     }
-    let str = obj.constructor.toString();
+    const str = obj.constructor.toString();
     let arr;
     if(str.charAt(0) == '[')
     {

@@ -1,4 +1,4 @@
-import { CustomError } from "."
+import { CustomError } from "./basic"
 
 export class NotFoundError extends CustomError {
   code = 40000
