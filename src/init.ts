@@ -5,7 +5,7 @@ import { CloudInputArgumentType } from './typings/args';
 import { initContext, setInstanceDebug } from './utils/getContext';
 import { wxCloudInit } from './utils/wx-cloud';
 
-export const initMeme = async ({ isDebug, env }: { isDebug?: boolean, env?: symbol | string } = {}) => {
+export const initMeme = async ({ isDebug, env }: { isDebug?: boolean; env?: symbol | string } = {}) => {
   setInstanceDebug(isDebug);
   wxCloudInit({ env });
 };

@@ -1,3 +1,3 @@
-export * from './basic'
-export * from './optional'
-export * from './validator'
+export * from './basic';
+export * from './optional';
+export * from './validator';
