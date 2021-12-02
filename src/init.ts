@@ -1,12 +1,12 @@
-import { readSync } from 'fs';
 import { catchError } from './errors/catch';
 import { initLogger } from './logger';
 import { Service, serviceSelector } from './mvc/service';
 import { CloudInputArgumentType } from './typings/args';
+import { stringUtils } from './utils';
 import { initContext, setInstanceDebug } from './utils/getContext';
 import { wxCloudInit } from './utils/wx-cloud';
 
-let waiting: any[] = [];
+let waiting: (() => void)[] = [];
 let isReady = false;
 
 const ready = () => {
@@ -19,12 +19,23 @@ const ready = () => {
   });
 };
 
-export const initMeme = async ({ isDebug, env }: { isDebug?: boolean; env?: symbol | string } = {}) => {
-  setInstanceDebug(isDebug);
-  wxCloudInit({ env });
+const checkDebug = (forceDebug?: boolean) => {
+  if (forceDebug === undefined && process.env.DEBUG !== undefined) {
+    forceDebug = stringUtils.toBool(process.env.DEBUG)
+  }
+  setInstanceDebug(forceDebug);
+}
+
+const clearWaiting = () => {
   isReady = true;
   waiting.forEach((r) => setImmediate(() => r()));
   waiting = [];
+}
+
+export const initMeme = async ({ isDebug, env }: { isDebug?: boolean; env?: symbol | string } = {}) => {
+  checkDebug(isDebug)
+  wxCloudInit({ env })
+  clearWaiting()
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

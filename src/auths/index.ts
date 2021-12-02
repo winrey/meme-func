@@ -67,6 +67,8 @@ export const needAuth = (auth: AuthType) => {
   };
 };
 
+export * from './debug'
+
 export default {
   Auth,
   checkAuth,

@@ -18,3 +18,10 @@ export const deleteRight = (str: string, right: string) => {
   }
   return str;
 };
+
+export const toBool = (str: string) => {
+  if (!str) return false;
+  if (['false', '0', 'undefined', 'null', 'n/a', 'none', ''].includes(str.toLowerCase()))
+    return false
+  return true
+}
