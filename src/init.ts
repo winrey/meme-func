@@ -21,21 +21,21 @@ const ready = () => {
 
 const checkDebug = (forceDebug?: boolean) => {
   if (forceDebug === undefined && process.env.DEBUG !== undefined) {
-    forceDebug = stringUtils.toBool(process.env.DEBUG)
+    forceDebug = stringUtils.toBool(process.env.DEBUG);
   }
   setInstanceDebug(forceDebug);
-}
+};
 
 const clearWaiting = () => {
   isReady = true;
   waiting.forEach((r) => setImmediate(() => r()));
   waiting = [];
-}
+};
 
 export const initMeme = async ({ isDebug, env }: { isDebug?: boolean; env?: symbol | string } = {}) => {
-  checkDebug(isDebug)
-  wxCloudInit({ env })
-  clearWaiting()
+  checkDebug(isDebug);
+  wxCloudInit({ env });
+  clearWaiting();
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
