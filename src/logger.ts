@@ -1,16 +1,25 @@
 import { type } from 'os';
 import cloud, { ICloud, logger } from 'wx-server-sdk';
-import { isDEBUG } from '..';
-import { Failure, LogNotReadyFailure } from '../errors/failure';
+import { AsyncLocalStorage } from 'async_hooks';
+import { Failure, LogNotReadyFailure } from './errors/failure';
+import { isDebug } from './utils/getContext';
 
-let wxLog: ICloud.Logger | null = null;
-let hasInit = false;
-let event, context;
+// let wxLog: ICloud.Logger | null = null;
+
+type LogContext = {
+  event: unknown,
+  context: unknown,
+  wxLog: ICloud.Logger,
+  logToWxMap: any,
+}
+
+const logContext = new AsyncLocalStorage<LogContext>();
+
 
 // interface ILogConfig {
 //   /** log唯一uuid */
 //   // needLogId?: boolean,
-//   /** 请求信息 */
+//   /** 请求信息 */ saa
 //   // needLogToConsole: boolean,
 //   /** 请求信息 */
 //   // needReqDetail?: boolean,
@@ -33,23 +42,23 @@ type LogLevel = 'debug' | 'info' | 'log' | 'warn' | 'error';
 //   "error": ICloud.Logger.prototype.error,
 // }
 
-let logToWxMap: any = {};
+// let logToWxMap: any = {};
 
 class Logger {
   // constructor() {
-
+    
   // }
 
   /**
    * 检查是否可以log
    */
   check() {
-    return !!wxLog;
+    return !!logContext.getStore();
   }
 
   assureCanLog() {
     // 以后要不要搞个await？
-    if (!wxLog) {
+    if (!this.check() ) {
       throw new LogNotReadyFailure();
     }
   }
@@ -102,7 +111,7 @@ class Logger {
   private _log(level: LogLevel, info: object | string, type = '') {
     this.assureCanLog();
     const isLogDebug = level === 'debug';
-    if (isLogDebug && !isDEBUG) {
+    if (isLogDebug && !isDebug()) {
       // 非debug mod不log debug
       return;
     }
@@ -113,6 +122,7 @@ class Logger {
     } else {
       logFunc?.call(console, '[wxlog]', info);
     }
+    const { wxLog, logToWxMap } = logContext.getStore() as LogContext
     logToWxMap[level].call(wxLog, logObj);
   }
 
@@ -136,22 +146,23 @@ class Logger {
 export const log = new Logger();
 
 // 一定要在使用前小程序入口main函数里调用！
-export const initLogger = (initEvent: any, initContext: any) => {
-  wxLog = cloud.logger();
-  hasInit = true;
-  event = initEvent;
-  context = initContext;
-  logToWxMap = {
+export const initLogger = async (initEvent: any, initContext: any, inner: () => Promise<void>) => {
+  const wxLog = cloud.logger();
+  const logToWxMap = {
     debug: wxLog.info,
     info: wxLog.info,
     log: wxLog.log,
     warn: wxLog.warn,
     error: wxLog.error,
   };
+  const data = { event: initEvent, context: initContext, wxLog, logToWxMap }
+  return await logContext.run(data, async () => {
+    return await inner()
+  })
 };
 
 export const getLogger = () => {
-  if (!hasInit) {
+  if (!logContext.getStore()) {
     throw new Failure('logger is not ready');
   }
   return log;

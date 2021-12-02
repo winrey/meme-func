@@ -1,5 +1,6 @@
 import { NotImplementFailure } from '../errors/failure';
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 type NullType = {} | null | undefined;
 type SingleOrArrayType<TConfident, TUnit> = TConfident extends Array<any> ? Array<TUnit> : TUnit | NullType;
 

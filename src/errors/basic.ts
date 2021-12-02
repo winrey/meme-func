@@ -45,3 +45,9 @@ export class CustomError extends Error {
     return makeErrorBasicRes(this.code, this.getMsg(), payload);
   }
 }
+
+export default {
+  makeErrorBasicRes,
+  CODE_OK,
+  CustomError,
+}

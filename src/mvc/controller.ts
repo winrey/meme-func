@@ -4,7 +4,7 @@ import { NotImplementFailure } from '../errors/failure';
 import { WrongReqError } from '../errors/request';
 import { CloudInputArgumentType } from '../typings/args';
 import { getClassName } from '../utils/getClassName';
-import { validate } from '../validators';
+import { validate } from '../validators/basic';
 import { Validator } from '../validators/validator';
 
 export class Controller<TEvent = any> {

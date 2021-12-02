@@ -1,6 +1,6 @@
 import { Validator } from './validator';
 
-export class OptionalValidator<T = any> extends Validator<T> {
+export class OptionalValidator<T = unknown> extends Validator<T> {
   validator: Validator | Array<Validator>;
 
   constructor(validator: Validator | Array<Validator>) {

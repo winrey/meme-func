@@ -1,8 +1,10 @@
+import { AuthError } from '../errors/auth';
 import { NotImplementFailure } from '../errors/failure';
-import { CloudInputArgumentType } from '../typings/args';
+import { Service } from '../mvc/service';
+import { CloudInputArgumentType, ContextType } from '../typings/args';
 
 export class Auth {
-  async check(): Promise<boolean> {
+  async check(request: CloudInputArgumentType): Promise<boolean> {
     throw new NotImplementFailure();
   }
 
@@ -17,12 +19,12 @@ export class Auth {
 
 export type AuthType = Auth | ((args: CloudInputArgumentType) => Promise<boolean>);
 
-export async function checkAuth(auth: AuthType, { event, context }: CloudInputArgumentType) {
+export async function checkAuth(auth: AuthType, request: CloudInputArgumentType) {
   if (!auth) return true;
   if (auth instanceof Auth) {
-    return await auth.check();
+    return await auth.check(request);
   }
-  return await auth({ event, context });
+  return await auth(request);
 }
 
 export const authAnd =
@@ -43,7 +45,31 @@ export const authOr =
         if (await checkAuth(auth, { event, context })) {
           return true;
         }
+      // eslint-disable-next-line no-empty
       } catch {}
     }
     return false;
   };
+
+  /**
+   * Auth Decorator
+   */
+export const needAuth = (auth: AuthType) => {
+  return (target: typeof Service, propertyKey: string, descriptor: PropertyDescriptor) => {
+    const old = descriptor.value;
+    descriptor.value = function (event: Record<string, unknown>, context: ContextType) {
+      if (!checkAuth(auth, { event, context })) {
+        throw new AuthError()
+      }
+      const result = old.call(this, event, context);
+      return result;
+    };
+  };
+};
+
+export default {
+  Auth, 
+  checkAuth,
+  authAnd,
+  authOr,
+}

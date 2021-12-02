@@ -1,8 +1,8 @@
 import { CustomError, makeErrorBasicRes } from './basic';
-import { isDEBUG } from '..';
-import { logFailure } from '../utils/logger';
+import { logFailure } from '../logger';
 import { Failure } from './failure';
 import { ServerInternalError } from './server';
+import { isDebug } from '../utils/getContext';
 
 export const catchError = async (func: CallableFunction) => {
   try {
@@ -16,7 +16,7 @@ export const catchError = async (func: CallableFunction) => {
       logFailure(e);
     }
     // TODO: 可以考虑以后上报sentry
-    if (isDEBUG) {
+    if (isDebug()) {
       // 服务器未知错误
       throw e;
     } else {

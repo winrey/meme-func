@@ -1,11 +1,15 @@
-import { CloudInputArgumentType } from './typings/args';
+import errors from './errors';
+import auths from './auths';
+import mvc from './mvc';
+import init from './init';
 
-export let isDEBUG = false;
-
-export const initMeme = async ({ isDebug = false }: { isDebug?: boolean }) => {
-  isDEBUG = isDebug;
-};
-
-export const initMemeReq = async ({ reqest, isDebug }: { reqest: CloudInputArgumentType; isDebug?: boolean }) => {
-  isDEBUG = isDebug || false;
-};
+export default { 
+  auths,
+  ...auths,
+  errors, 
+  ...errors,
+  mvc,
+  ...mvc,
+  init,
+  ...init,
+}

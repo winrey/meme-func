@@ -120,3 +120,17 @@ export async function updateByDoc(doc: DB.DocumentReference, updateContent = {},
 }
 
 export abstract class Dao {}
+
+export default {
+  getDbUtils,
+  getDb,
+  checkHasResult,
+  addCreatedTime,
+  updateTime,
+  getOneOrNull,
+  getDocById,
+  tryCreate,
+  tryUpdate,
+  updateByDoc,
+  Dao,
+}

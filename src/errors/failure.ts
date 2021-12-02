@@ -59,3 +59,21 @@ export class WrongArgumentFailure extends Failure {
   name = 'WrongArgumentFailure';
   msg = 'Wrong Argument Failure';
 }
+
+export class RegisterDuplicateFailure extends Failure {
+  name = 'RegisterDuplicateFailure';
+  msg = 'Register Duplicate Failure';
+}
+
+export default {
+  Failure, 
+  NotImplementFailure, 
+  LogNotReadyFailure, 
+  DatabaseResultNotObjFailure,
+  DatabaseUpdateFailure,
+  NoAuthInfoFailure,
+  NoAppIdFailure,
+  NoUnionIdFailure,
+  CreateUserFailure,
+  WrongArgumentFailure,
+}

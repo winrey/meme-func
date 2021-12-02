@@ -20,3 +20,9 @@ export class UploadFileError extends CustomError {
     this.statusCode = statusCode;
   }
 }
+
+export default {
+  ServerInternalError,
+  NetworkError,
+  UploadFileError,
+}

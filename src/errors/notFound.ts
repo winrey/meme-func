@@ -9,3 +9,8 @@ export class UserNotFoundError extends NotFoundError {
   code = 40001;
   msg = 'User Not Found Error';
 }
+
+export default {
+  NotFoundError,
+  UserNotFoundError,
+}

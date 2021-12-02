@@ -19,3 +19,7 @@ export class NotAllowedDebugError extends AuthError {
   code = 50201;
   msg = 'Not Allowed Debug';
 }
+
+export default {
+  AuthError, NeedLoginError, NeedUnionIdError, NotAllowedDebugError
+}

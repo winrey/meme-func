@@ -24,3 +24,11 @@ export class CloudIdSourceInvalidError extends CloudIdError {
   code = 25104;
   msg = 'CloudId Source Invalid Error';
 }
+
+export default {
+  CloudIdError,
+  ShouldBeCloudIdError,
+  CloudIdSourceNotAllowedError,
+  CloudIdSourceExpiredError,
+  CloudIdSourceInvalidError,
+}

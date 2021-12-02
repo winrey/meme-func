@@ -48,3 +48,11 @@ export class ArgumentShouldBeObjectError extends ArgumentError {
   code = 20201;
   msg = 'Argument Should Be Object Error';
 }
+
+export default {
+  WrongReqError,
+  NoSuchServiceError,
+  NoSuchTypeError,
+  ArgumentError,
+  ArgumentShouldBeObjectError,
+}
