@@ -6,25 +6,25 @@ import { CloudInputArgumentType } from './typings/args';
 import { initContext, setInstanceDebug } from './utils/getContext';
 import { wxCloudInit } from './utils/wx-cloud';
 
-let waiting: any[] = []
-let isReady = false
+let waiting: any[] = [];
+let isReady = false;
 
 const ready = () => {
-  return new Promise<void>(resolve => {
+  return new Promise<void>((resolve) => {
     if (isReady) {
-      resolve()
-      return
+      resolve();
+      return;
     }
-    waiting.push(resolve)
-  })
-}
+    waiting.push(resolve);
+  });
+};
 
 export const initMeme = async ({ isDebug, env }: { isDebug?: boolean; env?: symbol | string } = {}) => {
   setInstanceDebug(isDebug);
   wxCloudInit({ env });
-  isReady = true
-  waiting.forEach(r => setImmediate(() => r()))
-  waiting = []
+  isReady = true;
+  waiting.forEach((r) => setImmediate(() => r()));
+  waiting = [];
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -37,7 +37,7 @@ export const handleMemeReq = async ({
   isDebug?: boolean;
   srvs?: Record<string, Service>;
 }) => {
-  await ready()
+  await ready();
   return await initContext({ request, isDebug }, async () => {
     return await catchError(async () => {
       return await initLogger(request.event, request.context, async () => {
