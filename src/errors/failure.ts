@@ -66,9 +66,9 @@ export class RegisterDuplicateFailure extends Failure {
 }
 
 export default {
-  Failure, 
-  NotImplementFailure, 
-  LogNotReadyFailure, 
+  Failure,
+  NotImplementFailure,
+  LogNotReadyFailure,
   DatabaseResultNotObjFailure,
   DatabaseUpdateFailure,
   NoAuthInfoFailure,
@@ -76,4 +76,4 @@ export default {
   NoUnionIdFailure,
   CreateUserFailure,
   WrongArgumentFailure,
-}
+};

@@ -1,39 +1,39 @@
-import { RegisterDuplicateFailure } from "../errors/failure";
-import { Controller } from "./controller";
-import { Service } from "./service";
-import { deleteRight, kebabize } from "../utils/string";
+import { RegisterDuplicateFailure } from '../errors/failure';
+import { Controller } from './controller';
+import { Service } from './service';
+import { deleteRight, kebabize } from '../utils/string';
 
-export const defaultSrvs: Record<string, Service> = {}
+export const defaultSrvs: Record<string, Service> = {};
 
 /**
  * Class Decorator for Services and Controllers
  */
-export function register(name = "") {
+export function register(name = '') {
   return function <T extends new (...args: any[]) => Service | Controller>(constructor: T) {
-    const obj = new constructor()
+    const obj = new constructor();
     if (obj instanceof Service) {
-      registerService(obj, name)
+      registerService(obj, name);
     }
   };
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 function getName(obj: Object) {
-  let name = obj.constructor.name
-  name = deleteRight(name, "Service")
-  name = deleteRight(name, "Controller")
-  name = kebabize(name)
-  return name
+  let name = obj.constructor.name;
+  name = deleteRight(name, 'Service');
+  name = deleteRight(name, 'Controller');
+  name = kebabize(name);
+  return name;
 }
 
-function registerService(service: Service, name= "") {
+function registerService(service: Service, name = '') {
   if (!name) {
-    name = getName(service)
+    name = getName(service);
   }
   if (name in defaultSrvs) {
-    throw new RegisterDuplicateFailure(name)
+    throw new RegisterDuplicateFailure(name);
   }
-  defaultSrvs[name] = service
+  defaultSrvs[name] = service;
 }
 
 // function registerController(name="", ) {

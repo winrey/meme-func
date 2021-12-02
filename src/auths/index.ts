@@ -45,21 +45,21 @@ export const authOr =
         if (await checkAuth(auth, { event, context })) {
           return true;
         }
-      // eslint-disable-next-line no-empty
+        // eslint-disable-next-line no-empty
       } catch {}
     }
     return false;
   };
 
-  /**
-   * Auth Decorator
-   */
+/**
+ * Auth Decorator
+ */
 export const needAuth = (auth: AuthType) => {
   return (target: typeof Service, propertyKey: string, descriptor: PropertyDescriptor) => {
     const old = descriptor.value;
     descriptor.value = function (event: Record<string, unknown>, context: ContextType) {
       if (!checkAuth(auth, { event, context })) {
-        throw new AuthError()
+        throw new AuthError();
       }
       const result = old.call(this, event, context);
       return result;
@@ -68,8 +68,8 @@ export const needAuth = (auth: AuthType) => {
 };
 
 export default {
-  Auth, 
+  Auth,
   checkAuth,
   authAnd,
   authOr,
-}
+};

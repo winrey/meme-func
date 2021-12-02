@@ -21,5 +21,8 @@ export class NotAllowedDebugError extends AuthError {
 }
 
 export default {
-  AuthError, NeedLoginError, NeedUnionIdError, NotAllowedDebugError
-}
+  AuthError,
+  NeedLoginError,
+  NeedUnionIdError,
+  NotAllowedDebugError,
+};

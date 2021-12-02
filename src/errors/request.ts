@@ -55,4 +55,4 @@ export default {
   NoSuchTypeError,
   ArgumentError,
   ArgumentShouldBeObjectError,
-}
+};

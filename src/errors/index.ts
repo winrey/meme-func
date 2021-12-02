@@ -1,4 +1,4 @@
-import auth from './auth'
+import auth from './auth';
 import basic from './basic';
 import { catchError } from './catch';
 import cloud from './cloud';

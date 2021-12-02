@@ -49,17 +49,17 @@ export const needValidate = (validated: ValidatorType) => {
     const old = descriptor.value;
     descriptor.value = function (event: Record<string, unknown>, ...args: any[]) {
       if (!validate(validated, event)) {
-        throw new ArgumentError()
+        throw new ArgumentError();
       }
       const result = old.apply(this, [event, ...args]);
       return result;
     };
   };
-}
+};
 
 export default {
   validateArr,
   validateObj,
   validate,
   needValidate,
-}
+};

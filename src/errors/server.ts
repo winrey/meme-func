@@ -25,4 +25,4 @@ export default {
   ServerInternalError,
   NetworkError,
   UploadFileError,
-}
+};

@@ -50,4 +50,4 @@ export default {
   makeErrorBasicRes,
   CODE_OK,
   CustomError,
-}
+};

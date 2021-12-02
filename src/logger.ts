@@ -7,14 +7,13 @@ import { isDebug } from './utils/getContext';
 // let wxLog: ICloud.Logger | null = null;
 
 type LogContext = {
-  event: unknown,
-  context: unknown,
-  wxLog: ICloud.Logger,
-  logToWxMap: any,
-}
+  event: unknown;
+  context: unknown;
+  wxLog: ICloud.Logger;
+  logToWxMap: any;
+};
 
 const logContext = new AsyncLocalStorage<LogContext>();
-
 
 // interface ILogConfig {
 //   /** log唯一uuid */
@@ -46,7 +45,7 @@ type LogLevel = 'debug' | 'info' | 'log' | 'warn' | 'error';
 
 class Logger {
   // constructor() {
-    
+
   // }
 
   /**
@@ -58,7 +57,7 @@ class Logger {
 
   assureCanLog() {
     // 以后要不要搞个await？
-    if (!this.check() ) {
+    if (!this.check()) {
       throw new LogNotReadyFailure();
     }
   }
@@ -122,7 +121,7 @@ class Logger {
     } else {
       logFunc?.call(console, '[wxlog]', info);
     }
-    const { wxLog, logToWxMap } = logContext.getStore() as LogContext
+    const { wxLog, logToWxMap } = logContext.getStore() as LogContext;
     logToWxMap[level].call(wxLog, logObj);
   }
 
@@ -155,10 +154,10 @@ export const initLogger = async (initEvent: any, initContext: any, inner: () => 
     warn: wxLog.warn,
     error: wxLog.error,
   };
-  const data = { event: initEvent, context: initContext, wxLog, logToWxMap }
+  const data = { event: initEvent, context: initContext, wxLog, logToWxMap };
   return await logContext.run(data, async () => {
-    return await inner()
-  })
+    return await inner();
+  });
 };
 
 export const getLogger = () => {

@@ -1,4 +1,3 @@
-
 import { Controller } from './controller';
 import db from './db';
 import { Module } from './module';
@@ -13,5 +12,4 @@ export default {
   entrance,
   db,
   ...db,
-}
-
+};

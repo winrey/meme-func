@@ -13,4 +13,4 @@ export class UserNotFoundError extends NotFoundError {
 export default {
   NotFoundError,
   UserNotFoundError,
-}
+};

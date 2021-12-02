@@ -3,13 +3,13 @@ import auths from './auths';
 import mvc from './mvc';
 import init from './init';
 
-export default { 
+export default {
   auths,
   ...auths,
-  errors, 
+  errors,
   ...errors,
   mvc,
   ...mvc,
   init,
   ...init,
-}
+};

@@ -7,19 +7,18 @@ import { Controller } from './controller';
 import { defaultSrvs } from './register';
 
 export class Service {
-
   auth?: AuthType;
   controllers: { [index: string]: Controller } = {};
-  static entrance = new Map<typeof Service, Record<string, string>>()
+  static entrance = new Map<typeof Service, Record<string, string>>();
 
   private getClassEntrance() {
-    const key = Object.getPrototypeOf(this).constructor
-    let result = Service.entrance.get(key)
+    const key = Object.getPrototypeOf(this).constructor;
+    let result = Service.entrance.get(key);
     if (!result) {
-      result = {}
-      Service.entrance.set(key, result)
+      result = {};
+      Service.entrance.set(key, result);
     }
-    return result
+    return result;
   }
 
   async assertAuth({ event, context }: CloudInputArgumentType) {
@@ -38,9 +37,9 @@ export class Service {
     if (!type) {
       throw new WrongReqError("Cannot Find 'type' In Request");
     }
-    const entrance = this.getClassEntrance()[type]
+    const entrance = this.getClassEntrance()[type];
     if (entrance) {
-      return await (this as any)[entrance].call(this, event, context)
+      return await (this as any)[entrance].call(this, event, context);
     }
     const controller = this.controllers[type];
     if (!controller) {
@@ -53,15 +52,15 @@ export class Service {
 export const entrance = (name?: string) => {
   return (target: typeof Service, propertyKey: string, descriptor: PropertyDescriptor) => {
     // target.entrance[name ?? propertyKey] = propertyKey
-    const key = name ?? propertyKey
-    let entrance = Service.entrance.get(target)
+    const key = name ?? propertyKey;
+    let entrance = Service.entrance.get(target);
     if (!entrance) {
-      entrance = {}
-      Service.entrance.set(target, entrance) 
+      entrance = {};
+      Service.entrance.set(target, entrance);
     }
-    entrance[key] = propertyKey
+    entrance[key] = propertyKey;
   };
-}
+};
 
 export const serviceSelector = async (
   { event, context }: CloudInputArgumentType,
@@ -69,7 +68,7 @@ export const serviceSelector = async (
   key = 'service',
 ) => {
   if (!srvs) {
-    srvs = defaultSrvs
+    srvs = defaultSrvs;
   }
   if (!event || !event[key]) {
     throw new WrongReqError("Cannot Find 'service' In Request");
@@ -81,4 +80,4 @@ export const serviceSelector = async (
   return await srvs[id].main({ event, context });
 };
 
-// export const TypeFunc = 
+// export const TypeFunc =
