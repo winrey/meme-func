@@ -1,9 +1,3 @@
-import basic from './basic';
-import { OptionalValidator } from './optional';
-import { Validator } from './validator';
-
-export default {
-  ...basic,
-  OptionalValidator,
-  Validator,
-};
+export * from './basic'
+export * from './optional'
+export * from './validator'

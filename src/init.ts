@@ -3,9 +3,11 @@ import { initLogger } from './logger';
 import { Service, serviceSelector } from './mvc/service';
 import { CloudInputArgumentType } from './typings/args';
 import { initContext, setInstanceDebug } from './utils/getContext';
+import { wxCloudInit } from './utils/wx-cloud';
 
-export const initMeme = async ({ isDebug }: { isDebug?: boolean } = {}) => {
+export const initMeme = async ({ isDebug, env }: { isDebug?: boolean, env?: symbol | string } = {}) => {
   setInstanceDebug(isDebug);
+  wxCloudInit({ env });
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
