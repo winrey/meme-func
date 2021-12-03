@@ -9,10 +9,10 @@ import { defaultSrvs } from './register';
 export class Service {
   auth?: AuthType;
   controllers: { [index: string]: Controller } = {};
-  static entrance = new Map<typeof Service, Record<string, string>>();
+  static entrance = new Map<unknown, Record<string, string>>();
 
   private getClassEntrance() {
-    const key = Object.getPrototypeOf(this).constructor;
+    const key = Object.getPrototypeOf(this);
     let result = Service.entrance.get(key);
     if (!result) {
       result = {};
@@ -50,7 +50,7 @@ export class Service {
 }
 
 export const entrance = (name?: string) => {
-  return (target: typeof Service, propertyKey: string, descriptor: PropertyDescriptor) => {
+  return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
     // target.entrance[name ?? propertyKey] = propertyKey
     const key = name ?? propertyKey;
     let entrance = Service.entrance.get(target);
