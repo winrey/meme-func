@@ -45,7 +45,7 @@ export async function validate(validated: ValidatorType | undefined, value: any)
 }
 
 export const needValidate = (validated: ValidatorType) => {
-  return (target: typeof Service, propertyKey: string, descriptor: PropertyDescriptor) => {
+  return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
     const old = descriptor.value;
     descriptor.value = function (event: Record<string, unknown>, ...args: any[]) {
       if (!validate(validated, event)) {

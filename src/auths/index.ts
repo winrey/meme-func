@@ -55,7 +55,7 @@ export const authOr =
  * Auth Decorator
  */
 export const needAuth = (auth: AuthType) => {
-  return (target: typeof Service, propertyKey: string, descriptor: PropertyDescriptor) => {
+  return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
     const old = descriptor.value;
     descriptor.value = function (event: Record<string, unknown>, context: ContextType) {
       if (!checkAuth(auth, { event, context })) {
