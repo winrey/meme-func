@@ -1,31 +1,38 @@
 import { WrongArgumentFailure } from '../errors/failure';
 import { ArgumentError } from '../errors/request';
-import { Service } from '../mvc/service';
 import { Validator } from './validator';
 
 export interface IValidatorObject {
   [key: string]: ValidatorType;
 }
 
-export type ValidatorType = IValidatorObject | Validator | Validator[];
+export type IValidatorFunc = (value: any) => (boolean | Promise<boolean>)
 
-async function validateArr(validators: Validator[], value: any) {
+export type ValidatorType = IValidatorObject 
+  | Validator | ValidatorType[] | IValidatorFunc;
+
+export async function validateArr(validators: ValidatorType[], value: any) {
   for (const v of validators) {
-    if (!(await v.validate(value))) {
+    if (!(await validate(v, value))) {
       return false;
     }
   }
   return true;
 }
 
-async function validateObj(validatorObj: IValidatorObject, value: any): Promise<boolean> {
+export async function validateObj(validatorObj: IValidatorObject, value: any): Promise<boolean> {
   if (!value) {
     return false;
   }
   for (const [key, validator] of Object.entries(validatorObj)) {
-    if (!(await validate(validator, value[key]))) return false;
+    if (!(await validate(validator, value[key])))
+      return false;
   }
   return true;
+}
+
+export async function validateFunc(validatorFunc: IValidatorFunc, value: any): Promise<boolean> {
+  return await validatorFunc(value);
 }
 
 export async function validate(validated: ValidatorType | undefined, value: any) {
@@ -37,6 +44,9 @@ export async function validate(validated: ValidatorType | undefined, value: any)
   }
   if (validated instanceof Array) {
     return await validateArr(validated, value);
+  }
+  if (validated instanceof Function) {
+    return await validateFunc(validated, value);
   }
   if (validated instanceof Object) {
     return await validateObj(validated, value);
@@ -55,11 +65,4 @@ export const needValidate = (validated: ValidatorType) => {
       return result;
     };
   };
-};
-
-export default {
-  validateArr,
-  validateObj,
-  validate,
-  needValidate,
 };

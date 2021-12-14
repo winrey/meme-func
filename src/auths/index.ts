@@ -1,6 +1,5 @@
 import { AuthError } from '../errors/auth';
 import { NotImplementFailure } from '../errors/failure';
-import { Service } from '../mvc/service';
 import { CloudInputArgumentType, ContextType } from '../typings/args';
 
 export class Auth {

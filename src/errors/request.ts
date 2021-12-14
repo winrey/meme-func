@@ -49,10 +49,7 @@ export class ArgumentShouldBeObjectError extends ArgumentError {
   msg = 'Argument Should Be Object Error';
 }
 
-export default {
-  WrongReqError,
-  NoSuchServiceError,
-  NoSuchTypeError,
-  ArgumentError,
-  ArgumentShouldBeObjectError,
-};
+export class OperatedObjDoNotHaveId extends ArgumentError {
+  code = 20202;
+  msg = 'Operated Object Do Not Have a _id';
+}

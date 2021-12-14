@@ -31,10 +31,10 @@ export class Controller<TEvent = any> {
   }
 
   async execute({ event, context }: CloudInputArgumentType<TEvent>) {
-    await this.assertAuth({ event, context });
     if (!(await this.validate({ event, context }))) {
       throw new WrongReqError();
     }
+    await this.assertAuth({ event, context });
     return await this.main({ event, context });
   }
 }

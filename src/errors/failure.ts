@@ -65,15 +65,7 @@ export class RegisterDuplicateFailure extends Failure {
   msg = 'Register Duplicate Failure';
 }
 
-export default {
-  Failure,
-  NotImplementFailure,
-  LogNotReadyFailure,
-  DatabaseResultNotObjFailure,
-  DatabaseUpdateFailure,
-  NoAuthInfoFailure,
-  NoAppIdFailure,
-  NoUnionIdFailure,
-  CreateUserFailure,
-  WrongArgumentFailure,
-};
+export class DataAlreadyHaveOwnerFailure extends Failure {
+  name = 'DataAlreadyHaveOwnerFailure';
+  msg = 'Data Already Have Owner Failure';
+}

@@ -1,3 +1,4 @@
+import { result } from 'lodash';
 import { catchError } from './errors/catch';
 import { initLogger } from './logger';
 import { Service, serviceSelector } from './mvc/service';
@@ -32,10 +33,17 @@ const clearWaiting = () => {
   waiting = [];
 };
 
-export const initMeme = async ({ isDebug, env }: { isDebug?: boolean; env?: symbol | string } = {}) => {
+export const initMeme = async ({ isDebug, env, initFunc }: { isDebug?: boolean; env?: symbol | string, initFunc?: () => unknown } = {}) => {
   checkDebug(isDebug);
+  let result
+  if (initFunc) {
+    result = await initFunc()
+  }
   wxCloudInit({ env });
   clearWaiting();
+  if (result) {
+    return result
+  }
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -50,8 +58,8 @@ export const handleMemeReq = async ({
 }) => {
   await ready();
   return await initContext({ request, isDebug }, async () => {
-    return await catchError(async () => {
-      return await initLogger(request.event, request.context, async () => {
+    return await initLogger(request.event, request.context, async () => {
+      return await catchError(async () => {
         return await serviceSelector(
           {
             event: request.event,

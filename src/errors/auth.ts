@@ -20,6 +20,11 @@ export class NotAllowedDebugError extends AuthError {
   msg = 'Not Allowed Debug';
 }
 
+export class NotAllowedObjectError extends AuthError {
+  code = 50300;
+  msg = 'You are not the owner of the object';
+}
+
 export default {
   AuthError,
   NeedLoginError,
