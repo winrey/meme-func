@@ -1,10 +1,10 @@
 import { CustomError, makeErrorBasicRes } from './basic';
-import { logFailure } from '../logger';
+// import { logFailure } from '../logger';
 import { Failure } from './failure';
 import { ServerInternalError } from './server';
 import { isDebug } from '../utils/getContext';
 
-export const catchError = async (func: CallableFunction) => {
+export const catchError = async (func: CallableFunction, logFailure?: (e: Failure) => void) => {
   try {
     return await func();
   } catch (e) {
@@ -13,7 +13,7 @@ export const catchError = async (func: CallableFunction) => {
     }
     if (e instanceof Failure) {
       // 服务器已知错误（可预料）
-      logFailure(e);
+      logFailure?.(e)
     }
     // TODO: 可以考虑以后上报sentry
     if (isDebug()) {

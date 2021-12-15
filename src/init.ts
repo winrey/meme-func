@@ -3,7 +3,7 @@ import { catchError } from './errors/catch';
 import { Service, serviceSelector } from './mvc/service';
 import { CloudInputArgumentType } from './typings/args';
 import { stringUtils } from './utils';
-import { initContext, setInstanceDebug } from './utils/getContext';
+import { initContext, mergeContext } from './utils/getContext';
 
 let waiting: (() => void)[] = [];
 let isReady = false;
@@ -18,11 +18,11 @@ const ready = () => {
   });
 };
 
-const checkDebug = (forceDebug?: boolean) => {
+const checkDebug = async (forceDebug?: boolean) => {
   if (forceDebug === undefined && process.env.DEBUG !== undefined) {
     forceDebug = stringUtils.toBool(process.env.DEBUG);
   }
-  setInstanceDebug(forceDebug);
+  return await mergeContext({ debug: forceDebug })
 };
 
 const clearWaiting = () => {
@@ -36,7 +36,7 @@ export const initMeme = async ({
   env,
   initFunc,
 }: { isDebug?: boolean; env?: symbol | string; initFunc?: () => unknown } = {}) => {
-  checkDebug(isDebug);
+  await checkDebug(isDebug);
   let result;
   if (initFunc) {
     result = await initFunc();
@@ -50,15 +50,15 @@ export const initMeme = async ({
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const handleMemeReq = async ({
   request,
-  isDebug,
+  debug,
   srvs,
 }: {
   request: CloudInputArgumentType;
-  isDebug?: boolean;
+  debug?: boolean;
   srvs?: Record<string, Service>;
 }) => {
   await ready();
-  return await initContext({ request, isDebug }, async () => {
+  return await initContext({ request, debug }, async () => {
     // return await initLogger(request.event, request.context, async () => {
     return await catchError(async () => {
       return await serviceSelector(

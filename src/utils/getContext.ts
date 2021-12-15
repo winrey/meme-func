@@ -3,17 +3,30 @@ import { Failure } from '../errors/failure';
 import { ILogger } from '../logger';
 import { CloudInputArgumentType } from '../typings/args';
 
-type ReqContext = { request: CloudInputArgumentType; logger?: ILogger };
+type ReqContext = { request?: CloudInputArgumentType; logger?: ILogger; debug?: boolean };
 
 const contextStorage = new AsyncLocalStorage<ReqContext>();
 
-export const initContext = async (context: ReqContext, inner?: () => Promise<void>) => {
+export const setContext = async (context: ReqContext, inner?: () => Promise<void>) => {
   if (inner) {
     return await contextStorage.run(context, async () => {
       return await inner();
     });
   }
   contextStorage.enterWith(context);
+};
+
+export const initContext = setContext
+
+export const mergeContext = async (merged: ReqContext, inner?: () => Promise<void>) => {
+  const old = contextStorage.getStore() || {}
+  const context = { ...old, ...merged }
+  return await setContext(context, inner)
+};
+
+export const isDebug = () => {
+  const { debug } = contextStorage.getStore() || {};
+  return Boolean(debug);
 };
 
 export const getRequest = () => {
