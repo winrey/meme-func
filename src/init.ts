@@ -31,15 +31,19 @@ const clearWaiting = () => {
   waiting = [];
 };
 
-export const initMeme = async ({ isDebug, env, initFunc }: { isDebug?: boolean; env?: symbol | string, initFunc?: () => unknown } = {}) => {
+export const initMeme = async ({
+  isDebug,
+  env,
+  initFunc,
+}: { isDebug?: boolean; env?: symbol | string; initFunc?: () => unknown } = {}) => {
   checkDebug(isDebug);
-  let result
+  let result;
   if (initFunc) {
-    result = await initFunc()
+    result = await initFunc();
   }
   clearWaiting();
   if (result) {
-    return result
+    return result;
   }
 };
 
@@ -56,15 +60,15 @@ export const handleMemeReq = async ({
   await ready();
   return await initContext({ request, isDebug }, async () => {
     // return await initLogger(request.event, request.context, async () => {
-      return await catchError(async () => {
-        return await serviceSelector(
-          {
-            event: request.event,
-            context: request.context,
-          },
-          srvs,
-        );
-      });
+    return await catchError(async () => {
+      return await serviceSelector(
+        {
+          event: request.event,
+          context: request.context,
+        },
+        srvs,
+      );
+    });
     // });
   });
 };

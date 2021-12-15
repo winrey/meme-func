@@ -6,10 +6,9 @@ export interface IValidatorObject {
   [key: string]: ValidatorType;
 }
 
-export type IValidatorFunc = (value: any) => (boolean | Promise<boolean>)
+export type IValidatorFunc = (value: any) => boolean | Promise<boolean>;
 
-export type ValidatorType = IValidatorObject 
-  | Validator | ValidatorType[] | IValidatorFunc;
+export type ValidatorType = IValidatorObject | Validator | ValidatorType[] | IValidatorFunc;
 
 export async function validateArr(validators: ValidatorType[], value: any) {
   for (const v of validators) {
@@ -25,8 +24,7 @@ export async function validateObj(validatorObj: IValidatorObject, value: any): P
     return false;
   }
   for (const [key, validator] of Object.entries(validatorObj)) {
-    if (!(await validate(validator, value[key])))
-      return false;
+    if (!(await validate(validator, value[key]))) return false;
   }
   return true;
 }

@@ -8,4 +8,3 @@ export * as controller from './controller';
 export * as modules from './module';
 export * as serializers from './serializer';
 export * as service from './service';
-

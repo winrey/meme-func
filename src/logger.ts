@@ -12,11 +12,11 @@
 // const logContext = new AsyncLocalStorage<LogContext>();
 
 export interface ILogger {
-  debug(...args: unknown[]): void
-  info(...args: unknown[]): void
-  log(...args: unknown[]): void
-  warn(...args: unknown[]): void
-  error(...args: unknown[]): void
+  debug(...args: unknown[]): void;
+  info(...args: unknown[]): void;
+  log(...args: unknown[]): void;
+  warn(...args: unknown[]): void;
+  error(...args: unknown[]): void;
 }
 
 // // interface ILogConfig {

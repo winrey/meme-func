@@ -13,7 +13,7 @@ export const initContext = async (context: ReqContext, inner?: () => Promise<voi
       return await inner();
     });
   }
-  contextStorage.enterWith(context)
+  contextStorage.enterWith(context);
 };
 
 export const getRequest = () => {
@@ -37,8 +37,8 @@ export const getContext = () => {
 export const getLogger = () => {
   const { logger } = contextStorage.getStore() || {};
   if (!logger) {
-    console.warn("Logger Not Provided. Use Default console instead.")
-    return console
+    console.warn('Logger Not Provided. Use Default console instead.');
+    return console;
   }
-  return logger
+  return logger;
 };

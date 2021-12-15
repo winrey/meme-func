@@ -1,9 +1,9 @@
-import { Validator } from ".";
-import { validate, validateArr, ValidatorType } from "./basic"
+import { Validator } from '.';
+import { validate, validateArr, ValidatorType } from './basic';
 
 export const andValidator = (validators: ValidatorType[]) => async (value: any) => {
-  return await validateArr(validators, value)
-}
+  return await validateArr(validators, value);
+};
 
 export const orValidator = (validators: ValidatorType[]) => async (value: any) => {
   for (const v of validators) {
@@ -12,34 +12,34 @@ export const orValidator = (validators: ValidatorType[]) => async (value: any) =
         return true;
       }
     } catch (e) {
-      continue
+      continue;
     }
   }
   return false;
-}
+};
 
 export class AndValidator extends Validator {
-  validators: ValidatorType[]
+  validators: ValidatorType[];
 
   constructor(validators: ValidatorType[]) {
     super();
-    this.validators = validators
+    this.validators = validators;
   }
 
   async doValidate(value: any): Promise<boolean> {
-    return await andValidator(this.validators)(value)
+    return await andValidator(this.validators)(value);
   }
 }
 
 export class OrValidator extends Validator {
-  validators: ValidatorType[]
+  validators: ValidatorType[];
 
   constructor(validators: ValidatorType[]) {
     super();
-    this.validators = validators
+    this.validators = validators;
   }
 
   async doValidate(value: any): Promise<boolean> {
-    return await orValidator(this.validators)(value)
+    return await orValidator(this.validators)(value);
   }
 }
