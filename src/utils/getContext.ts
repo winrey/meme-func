@@ -16,12 +16,12 @@ export const setContext = async (context: ReqContext, inner?: () => Promise<void
   contextStorage.enterWith(context);
 };
 
-export const initContext = setContext
+export const initContext = setContext;
 
 export const mergeContext = async (merged: ReqContext, inner?: () => Promise<void>) => {
-  const old = contextStorage.getStore() || {}
-  const context = { ...old, ...merged }
-  return await setContext(context, inner)
+  const old = contextStorage.getStore() || {};
+  const context = { ...old, ...merged };
+  return await setContext(context, inner);
 };
 
 export const isDebug = () => {

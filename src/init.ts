@@ -22,7 +22,7 @@ const checkDebug = async (forceDebug?: boolean) => {
   if (forceDebug === undefined && process.env.DEBUG !== undefined) {
     forceDebug = stringUtils.toBool(process.env.DEBUG);
   }
-  return await mergeContext({ debug: forceDebug })
+  return await mergeContext({ debug: forceDebug });
 };
 
 const clearWaiting = () => {

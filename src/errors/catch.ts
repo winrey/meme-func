@@ -13,7 +13,7 @@ export const catchError = async (func: CallableFunction, logFailure?: (e: Failur
     }
     if (e instanceof Failure) {
       // 服务器已知错误（可预料）
-      logFailure?.(e)
+      logFailure?.(e);
     }
     // TODO: 可以考虑以后上报sentry
     if (isDebug()) {
