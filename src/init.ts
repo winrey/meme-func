@@ -1,11 +1,9 @@
-import { result } from 'lodash';
 import { catchError } from './errors/catch';
-import { initLogger } from './logger';
+// import { initLogger } from './logger';
 import { Service, serviceSelector } from './mvc/service';
 import { CloudInputArgumentType } from './typings/args';
 import { stringUtils } from './utils';
 import { initContext, setInstanceDebug } from './utils/getContext';
-import { wxCloudInit } from './utils/wx-cloud';
 
 let waiting: (() => void)[] = [];
 let isReady = false;
@@ -39,7 +37,6 @@ export const initMeme = async ({ isDebug, env, initFunc }: { isDebug?: boolean; 
   if (initFunc) {
     result = await initFunc()
   }
-  wxCloudInit({ env });
   clearWaiting();
   if (result) {
     return result
@@ -58,7 +55,7 @@ export const handleMemeReq = async ({
 }) => {
   await ready();
   return await initContext({ request, isDebug }, async () => {
-    return await initLogger(request.event, request.context, async () => {
+    // return await initLogger(request.event, request.context, async () => {
       return await catchError(async () => {
         return await serviceSelector(
           {
@@ -68,7 +65,7 @@ export const handleMemeReq = async ({
           srvs,
         );
       });
-    });
+    // });
   });
 };
 

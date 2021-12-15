@@ -1,29 +1,19 @@
 import { AsyncLocalStorage } from 'async_hooks';
 import { Failure } from '../errors/failure';
+import { ILogger } from '../logger';
 import { CloudInputArgumentType } from '../typings/args';
 
-export let _isDebug = false;
-
-export const isDebug = () => {
-  const context = contextStorage.getStore();
-  if (context && context.isDebug !== undefined) {
-    return context.isDebug;
-  }
-  return _isDebug;
-};
-
-type ReqContext = { request: CloudInputArgumentType; isDebug?: boolean };
+type ReqContext = { request: CloudInputArgumentType; logger?: ILogger };
 
 const contextStorage = new AsyncLocalStorage<ReqContext>();
 
-export const setInstanceDebug = (debug?: boolean) => {
-  _isDebug = debug ?? _isDebug;
-};
-
-export const initContext = async (context: ReqContext, inner: () => Promise<void>) => {
-  return await contextStorage.run(context, async () => {
-    return await inner();
-  });
+export const initContext = async (context: ReqContext, inner?: () => Promise<void>) => {
+  if (inner) {
+    return await contextStorage.run(context, async () => {
+      return await inner();
+    });
+  }
+  contextStorage.enterWith(context)
 };
 
 export const getRequest = () => {
@@ -42,4 +32,13 @@ export const getEvent = () => {
 export const getContext = () => {
   const { context } = getRequest();
   return context;
+};
+
+export const getLogger = () => {
+  const { logger } = contextStorage.getStore() || {};
+  if (!logger) {
+    console.warn("Logger Not Provided. Use Default console instead.")
+    return console
+  }
+  return logger
 };
