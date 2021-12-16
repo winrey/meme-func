@@ -4,7 +4,12 @@ import { Failure } from './failure';
 import { ServerInternalError } from './server';
 import { isDebug } from '../utils/getContext';
 
-export const catchError = async (func: CallableFunction, logFailure?: (e: Failure) => void) => {
+export type TCatchErrorConfig = {
+  logFailure?: (e: Failure) => void
+  throwServerError?: boolean
+}
+
+export const catchError = async (func: CallableFunction, {logFailure, throwServerError}: TCatchErrorConfig = {}) => {
   try {
     return await func();
   } catch (e) {
@@ -16,7 +21,7 @@ export const catchError = async (func: CallableFunction, logFailure?: (e: Failur
       logFailure?.(e);
     }
     // TODO: 可以考虑以后上报sentry
-    if (isDebug()) {
+    if (throwServerError ?? isDebug()) {
       // 服务器未知错误
       throw e;
     } else {

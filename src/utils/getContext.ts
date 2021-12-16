@@ -1,9 +1,10 @@
 import { AsyncLocalStorage } from 'async_hooks';
 import { Failure } from '../errors/failure';
 import { ILogger } from '../logger';
-import { CloudInputArgumentType } from '../typings/args';
+import { CloudInputArgumentType, ContextType } from '../typings/args';
 
-type ReqContext = { request?: CloudInputArgumentType; logger?: ILogger; debug?: boolean };
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type ReqContext<TEvent=any> = { event?: TEvent; context?: ContextType; logger?: ILogger; debug?: boolean };
 
 const contextStorage = new AsyncLocalStorage<ReqContext>();
 
@@ -30,20 +31,18 @@ export const isDebug = () => {
 };
 
 export const getRequest = () => {
-  const { request } = contextStorage.getStore() || {};
-  if (!request) {
-    throw new Failure('not in meme init!');
-  }
-  return request as CloudInputArgumentType;
+  const context = getContext();
+  const event = getEvent();
+  return { event, context };
 };
 
 export const getEvent = () => {
-  const { event } = getRequest();
+  const { event } = contextStorage.getStore() || {};
   return event;
 };
 
 export const getContext = () => {
-  const { context } = getRequest();
+  const { context } = contextStorage.getStore() || {};
   return context;
 };
 

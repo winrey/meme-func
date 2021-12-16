@@ -9,7 +9,12 @@ import { defaultSrvs } from './register';
 export class Service {
   auth?: AuthType;
   controllers: { [index: string]: Controller } = {};
+  key = "type"
   static entrance = new Map<unknown, Record<string, string>>();
+
+  constructor({key}: {key?: string} = {}) {
+    this.key = key ?? this.key
+  }
 
   private getClassEntrance() {
     const key = Object.getPrototypeOf(this);
@@ -33,7 +38,7 @@ export class Service {
     // 检测服务权限
     await this.assertAuth({ event, context });
     // 检测controller服务权限
-    const type = event.type;
+    const type = event[this.key];
     if (!type) {
       throw new WrongReqError("Cannot Find 'type' In Request");
     }
@@ -43,7 +48,7 @@ export class Service {
     }
     const controller = this.controllers[type];
     if (!controller) {
-      throw new NoSuchTypeError(type, event.service);
+      throw new NoSuchTypeError(type, getClassName(this) || "");
     }
     return controller.execute({ event, context });
   }

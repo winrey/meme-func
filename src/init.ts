@@ -57,17 +57,12 @@ export const handleMemeReq = async ({
   debug?: boolean;
   srvs?: Record<string, Service>;
 }) => {
+  const { event, context } = request
   await ready();
-  return await initContext({ request, debug }, async () => {
+  return await initContext({ event, context, debug }, async () => {
     // return await initLogger(request.event, request.context, async () => {
     return await catchError(async () => {
-      return await serviceSelector(
-        {
-          event: request.event,
-          context: request.context,
-        },
-        srvs,
-      );
+      return await serviceSelector({ event, context }, srvs);
     });
     // });
   });
