@@ -9,11 +9,11 @@ import { defaultSrvs } from './register';
 export class Service {
   auth?: AuthType;
   controllers: { [index: string]: Controller } = {};
-  key = "type"
+  key = 'type';
   static entrance = new Map<unknown, Record<string, string>>();
 
-  constructor({key}: {key?: string} = {}) {
-    this.key = key ?? this.key
+  constructor({ key }: { key?: string } = {}) {
+    this.key = key ?? this.key;
   }
 
   private getClassEntrance() {
@@ -48,7 +48,7 @@ export class Service {
     }
     const controller = this.controllers[type];
     if (!controller) {
-      throw new NoSuchTypeError(type, getClassName(this) || "");
+      throw new NoSuchTypeError(type, getClassName(this) || '');
     }
     return controller.execute({ event, context });
   }

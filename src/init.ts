@@ -57,7 +57,7 @@ export const handleMemeReq = async ({
   debug?: boolean;
   srvs?: Record<string, Service>;
 }) => {
-  const { event, context } = request
+  const { event, context } = request;
   await ready();
   return await initContext({ event, context, debug }, async () => {
     // return await initLogger(request.event, request.context, async () => {

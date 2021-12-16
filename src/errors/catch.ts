@@ -5,11 +5,11 @@ import { ServerInternalError } from './server';
 import { isDebug } from '../utils/getContext';
 
 export type TCatchErrorConfig = {
-  logFailure?: (e: Failure) => void
-  throwServerError?: boolean
-}
+  logFailure?: (e: Failure) => void;
+  throwServerError?: boolean;
+};
 
-export const catchError = async (func: CallableFunction, {logFailure, throwServerError}: TCatchErrorConfig = {}) => {
+export const catchError = async (func: CallableFunction, { logFailure, throwServerError }: TCatchErrorConfig = {}) => {
   try {
     return await func();
   } catch (e) {

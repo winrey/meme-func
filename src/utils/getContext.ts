@@ -4,7 +4,7 @@ import { ILogger } from '../logger';
 import { CloudInputArgumentType, ContextType } from '../typings/args';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type ReqContext<TEvent=any> = { event?: TEvent; context?: ContextType; logger?: ILogger; debug?: boolean };
+type ReqContext<TEvent = any> = { event?: TEvent; context?: ContextType; logger?: ILogger; debug?: boolean };
 
 const contextStorage = new AsyncLocalStorage<ReqContext>();
 
