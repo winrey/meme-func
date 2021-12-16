@@ -1,6 +1,6 @@
 {
   "name": "meme-func",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "A set of useful functions for developing cloud functions.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
