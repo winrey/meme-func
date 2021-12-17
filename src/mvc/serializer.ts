@@ -1,4 +1,5 @@
-import { NotImplementFailure } from '../errors/failure';
+import { NotImplementFailure } from "adv-err";
+
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 type NullType = {} | null | undefined;

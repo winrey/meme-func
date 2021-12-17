@@ -1,5 +1,4 @@
-import { AuthError } from '../errors/auth';
-import { NotImplementFailure } from '../errors/failure';
+import { AuthError, NotImplementFailure } from 'adv-err';
 import { CloudInputArgumentType, ContextType } from '../typings/args';
 
 export class Auth {

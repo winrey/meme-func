@@ -1,2 +1,2 @@
-# Meme Functions
-A set of useful functions for developing cloud functions.
+# Serverless Embassy
+NodeJS Serverless Dev Framework - Make your code easy to switch between different Cloud Platforms

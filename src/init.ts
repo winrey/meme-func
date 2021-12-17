@@ -1,5 +1,5 @@
-import { catchError } from './errors/catch';
 // import { initLogger } from './logger';
+import { catchError } from 'adv-err';
 import { Service, serviceSelector } from './mvc/service';
 import { CloudInputArgumentType } from './typings/args';
 import { stringUtils } from './utils';

@@ -1,18 +1,8 @@
-import { CustomError } from './basic';
+import { ServerError } from "adv-err";
 
-export class ServerInternalError extends CustomError {
-  code = 60000;
-  msg = 'Server Internal Error';
-}
-
-export class NetworkError extends CustomError {
-  code = 60100;
-  msg = 'Network Error';
-}
-
-export class UploadFileError extends CustomError {
-  code = 60200;
-  msg = 'Upload File Error';
+export class UploadFileError extends ServerError {
+  code = 6201;
+  message = 'Upload File Error';
   statusCode?: number;
 
   constructor(statusCode?: number) {
@@ -20,9 +10,3 @@ export class UploadFileError extends CustomError {
     this.statusCode = statusCode;
   }
 }
-
-export default {
-  ServerInternalError,
-  NetworkError,
-  UploadFileError,
-};

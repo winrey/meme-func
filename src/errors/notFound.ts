@@ -1,16 +1,6 @@
-import { CustomError } from './basic';
-
-export class NotFoundError extends CustomError {
-  code = 40000;
-  msg = 'Not Found Error';
-}
+import { NotFoundError } from "adv-err";
 
 export class UserNotFoundError extends NotFoundError {
   code = 40001;
-  msg = 'User Not Found Error';
+  message = 'User Not Found Error';
 }
-
-export default {
-  NotFoundError,
-  UserNotFoundError,
-};

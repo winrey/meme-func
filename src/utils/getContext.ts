@@ -1,6 +1,5 @@
 import { AsyncLocalStorage } from 'async_hooks';
-import { Failure } from '../errors/failure';
-import { ILogger } from '../logger';
+import { ILogger } from '@embassy/interface';
 import { CloudInputArgumentType, ContextType } from '../typings/args';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

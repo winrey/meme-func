@@ -1,5 +1,7 @@
 # src
-# tsconfig.json
-# tslint.json
-# .prettierrc
+tsconfig.json
+.eslintrc.json
+.gitignore
+.prettierrc
 .vscode
+

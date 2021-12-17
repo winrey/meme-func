@@ -1,4 +1,4 @@
-import { NotImplementFailure } from '../errors/failure';
+import { NotImplementFailure } from 'adv-err';
 import { andValidator, orValidator } from './logic';
 
 export class Validator<T = unknown> {

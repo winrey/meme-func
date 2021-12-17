@@ -1,6 +1,6 @@
+import { AuthError, RequestError } from 'adv-err';
 import { AuthType, checkAuth } from '../auths';
-import { AuthError } from '../errors/auth';
-import { NoSuchServiceError, NoSuchTypeError, WrongReqError } from '../errors/request';
+import { NoSuchServiceError, NoSuchTypeError } from '../errors/request';
 import { CloudInputArgumentType } from '../typings/args';
 import { getClassName } from '../utils/getClassName';
 import { Controller } from './controller';
@@ -40,7 +40,7 @@ export class Service {
     // 检测controller服务权限
     const type = event[this.key];
     if (!type) {
-      throw new WrongReqError("Cannot Find 'type' In Request");
+      throw new RequestError("Cannot Find 'type' In Request");
     }
     const entrance = this.getClassEntrance()[type];
     if (entrance) {
@@ -76,7 +76,7 @@ export const serviceSelector = async (
     srvs = defaultSrvs;
   }
   if (!event || !event[key]) {
-    throw new WrongReqError("Cannot Find 'service' In Request");
+    throw new RequestError("Cannot Find 'service' In Request");
   }
   const id = event[key];
   if (!srvs[id] || !(srvs[id] instanceof Service)) {

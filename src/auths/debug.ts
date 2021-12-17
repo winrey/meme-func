@@ -1,4 +1,4 @@
-import { NotAllowedDebugError } from '../errors/auth';
+import { NotAllowedDebugError } from 'adv-err';
 import { isDebug } from '../utils/getContext';
 
 /**

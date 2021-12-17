@@ -1,7 +1,5 @@
+import { AuthError, NotImplementFailure, ArgumentError } from 'adv-err';
 import { AuthType, checkAuth } from '../auths';
-import { AuthError } from '../errors/auth';
-import { NotImplementFailure } from '../errors/failure';
-import { WrongReqError } from '../errors/request';
 import { CloudInputArgumentType } from '../typings/args';
 import { getClassName } from '../utils/getClassName';
 import { validate } from '../validators/basic';
@@ -32,7 +30,7 @@ export class Controller<TEvent = any> {
 
   async execute({ event, context }: CloudInputArgumentType<TEvent>) {
     if (!(await this.validate({ event, context }))) {
-      throw new WrongReqError();
+      throw new ArgumentError();
     }
     await this.assertAuth({ event, context });
     return await this.main({ event, context });

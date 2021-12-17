@@ -1,13 +1,8 @@
-import { CustomError } from './basic';
+import { RequestError, I2JsonOptions, ArgumentError } from "adv-err";
 
-export class WrongReqError extends CustomError {
-  code = 20100;
-  msg = 'Wrong Request';
-}
-
-export class NoSuchServiceError extends WrongReqError {
+export class NoSuchServiceError extends RequestError {
   code = 20101;
-  msg = 'No Such Service Name';
+  message = 'No Such Service Name';
   serviceName: string;
 
   constructor(serviceName: string) {
@@ -15,15 +10,15 @@ export class NoSuchServiceError extends WrongReqError {
     this.serviceName = serviceName;
   }
 
-  makeRes() {
+  toJSON(options: I2JsonOptions) {
     const { serviceName } = this;
-    return super.makeRes({ serviceName });
+    return super.toJSON({ ...options, payload: { serviceName, ...options.payload } });
   }
 }
 
-export class NoSuchTypeError extends WrongReqError {
+export class NoSuchTypeError extends RequestError {
   code = 20102;
-  msg = 'No Such Type Name in Service';
+  message = 'No Such Type Name in Service';
   typeName: string;
   serviceName: string;
 
@@ -33,23 +28,18 @@ export class NoSuchTypeError extends WrongReqError {
     this.serviceName = serviceName;
   }
 
-  makeRes() {
+  toJSON(options: I2JsonOptions) {
     const { typeName, serviceName } = this;
-    return super.makeRes({ typeName, serviceName });
+    return super.toJSON({ ...options, payload: { typeName, serviceName, ...options.payload } });
   }
 }
 
-export class ArgumentError extends WrongReqError {
-  code = 20200;
-  msg = 'Argument Error';
-}
-
 export class ArgumentShouldBeObjectError extends ArgumentError {
-  code = 20201;
-  msg = 'Argument Should Be Object Error';
+  code = 21001;
+  message = 'Argument Should Be Object Error';
 }
 
 export class OperatedObjDoNotHaveId extends ArgumentError {
-  code = 20202;
-  msg = 'Operated Object Do Not Have a _id';
+  code = 21002;
+  message = 'Operated Object Do Not Have a _id';
 }

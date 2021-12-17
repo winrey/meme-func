@@ -1,5 +1,4 @@
-import { WrongArgumentFailure } from '../errors/failure';
-import { ArgumentError } from '../errors/request';
+import { ArgumentError, WrongArgumentFailure } from 'adv-err';
 import { Validator } from './validator';
 
 export interface IValidatorObject {
