@@ -1,4 +1,4 @@
-import { Failure } from "adv-err";
+import { Failure } from 'adv-err';
 
 export class LogNotReadyFailure extends Failure {
   name = 'LogNotReadyFailure';

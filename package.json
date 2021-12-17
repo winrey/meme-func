@@ -1,6 +1,6 @@
 {
   "name": "@embassy/framework",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A NodeJS Serverless Dev Framework - Make your code easy to switch between different Cloud Platforms",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

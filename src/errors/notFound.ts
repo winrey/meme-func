@@ -1,4 +1,4 @@
-import { NotFoundError } from "adv-err";
+import { NotFoundError } from 'adv-err';
 
 export class UserNotFoundError extends NotFoundError {
   code = 40001;

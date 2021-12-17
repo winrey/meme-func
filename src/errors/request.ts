@@ -1,4 +1,4 @@
-import { RequestError, I2JsonOptions, ArgumentError } from "adv-err";
+import { RequestError, I2JsonOptions, ArgumentError } from 'adv-err';
 
 export class NoSuchServiceError extends RequestError {
   code = 20101;
